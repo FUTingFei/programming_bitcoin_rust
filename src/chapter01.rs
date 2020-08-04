@@ -1,12 +1,12 @@
 
 #[derive(Debug, PartialEq)]
-struct FieldElement {
+pub struct FieldElement {
     num: usize,
     prime: usize,
 }
 
 impl FieldElement {
-    fn new(num: usize, prime: usize) -> FieldElement {
+    pub fn new(num: usize, prime: usize) -> FieldElement {
         if num > prime {
             panic!("Num {} not in field range 0 to {}.", num, prime);
         }
@@ -17,19 +17,19 @@ impl FieldElement {
         }
     }
 
-    fn repr(&self) {
+    pub fn repr(&self) {
         println!("FieldElement_{}({})",self.num, self.prime);
     }
 
-    fn eq(&self, other: &FieldElement) -> bool {
+    pub fn eq(&self, other: &FieldElement) -> bool {
         self.num == other.num && self.prime == self.prime
     }
 
-    fn ne(&self, other: &FieldElement) -> bool {
+    pub fn ne(&self, other: &FieldElement) -> bool {
         self.num != other.num || self.prime != self.prime
     }
 
-    fn add(&self, other: &FieldElement) -> FieldElement {
+    pub fn add(&self, other: &FieldElement) -> FieldElement {
         if self.prime != other.prime {
             panic!("Cannot add two numbers in different Fields.");
         }
@@ -37,7 +37,7 @@ impl FieldElement {
         FieldElement::new(num, self.prime)
     }
 
-    fn sub(&self, other: &FieldElement) -> FieldElement {
+    pub fn sub(&self, other: &FieldElement) -> FieldElement {
         if self.prime != other.prime {
             panic!("Cannot add two numbers in different Fields.");
         }
@@ -53,7 +53,7 @@ impl FieldElement {
         FieldElement::new(num, self.prime)
     }
 
-    fn mul(&self, other: &FieldElement) -> FieldElement {
+    pub fn mul(&self, other: &FieldElement) -> FieldElement {
         if self.prime != other.prime {
             panic!("Cannot multi two numbers in different Fields.");
         }
@@ -61,7 +61,7 @@ impl FieldElement {
         FieldElement::new(num, self.prime)
     }
 
-    fn pow(&self, other: i32) -> FieldElement {
+    pub fn pow(&self, other: i32) -> FieldElement {
         let num = if other >= 0 {
             self.num.pow(other as u32)  % self.prime
         } else {
@@ -71,7 +71,7 @@ impl FieldElement {
         FieldElement::new(num, self.prime)
     }
 
-    fn div(&self, other: &FieldElement) -> FieldElement {
+    pub fn div(&self, other: &FieldElement) -> FieldElement {
         if self.prime != other.prime {
             panic!("Cannot multi two numbers in different Fields.");
         }
@@ -87,7 +87,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_chapter() {
+    fn test01() {
         let f1 = FieldElement::new(3, 13);
         let f2 = FieldElement::new(3, 13);
         let f3 = FieldElement::new(6, 13);
