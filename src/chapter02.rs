@@ -1,9 +1,9 @@
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Point {
-    x: Option<isize>,
-    y: Option<isize>,
-    a: isize,
-    b: isize,
+    pub x: Option<isize>,
+    pub y: Option<isize>,
+    pub a: isize,
+    pub b: isize,
 }
 
 impl Point {
@@ -21,7 +21,7 @@ impl Point {
                     x: Some(x_real),
                     y: Some(y_real),
                     a: a,
-                    b: b,
+                    b: b, 
                 }
             },
             (None, None) => {

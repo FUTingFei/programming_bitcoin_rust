@@ -1,8 +1,8 @@
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct FieldElement {
-    num: usize,
-    prime: usize,
+    pub num: usize,
+    pub prime: usize,
 }
 
 impl FieldElement {
@@ -63,9 +63,11 @@ impl FieldElement {
 
     pub fn pow(&self, other: i32) -> FieldElement {
         let num = if other >= 0 {
-            self.num.pow(other as u32)  % self.prime
+            // self.num.pow(other as u32)  % self.prime
+            mod_pow(self.num, other as usize, self.prime)
         } else {
-            self.num.pow((self.prime as isize - 1 + other as isize) as u32) % self.prime
+            // self.num.pow((self.prime as isize - 1 + other as isize) as u32) % self.prime
+            mod_pow(self.num, (self.prime as isize - 1 + other as isize) as usize , self.prime)
         };
 
         FieldElement::new(num, self.prime)
@@ -76,11 +78,29 @@ impl FieldElement {
             panic!("Cannot multi two numbers in different Fields.");
         }
 
-        let num = (self.num * other.num.pow(other.prime as u32 - 2)) % other.prime;
+        // let num = (self.num * other.num.pow(other.prime as u32 - 2)) % other.prime;
+        let num = (self.num * mod_pow(other.num, other.prime - 2, other.prime)) % other.prime;
 
         FieldElement::new(num, self.prime)
     }
 }
+
+// to be check
+// from https://rob.co.bb/posts/2019-02-10-modular-exponentiation-in-rust/
+pub fn mod_pow(mut base: usize, mut exp: usize, modulus: usize) -> usize {
+    if modulus == 1 { return 0 }
+    let mut result = 1;
+    base = base % modulus;
+    while exp > 0 {
+        if exp % 2 == 1 {
+            result = result * base % modulus;
+        }
+        exp = exp >> 1;
+        base = base * base % modulus
+    }
+    result
+}
+
 
 #[cfg(test)]
 mod tests {
