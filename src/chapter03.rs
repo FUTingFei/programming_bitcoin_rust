@@ -2,10 +2,10 @@ use crate::chapter01::FieldElement;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Point {
-    x: Option<FieldElement>,
-    y: Option<FieldElement>,
-    a: FieldElement,
-    b: FieldElement,
+    pub x: Option<FieldElement>,
+    pub y: Option<FieldElement>,
+    pub a: FieldElement,
+    pub b: FieldElement,
 }
 
 impl Point {
@@ -95,6 +95,23 @@ impl Point {
         }
     }
 
+    // learn
+    pub fn rmul(&self, coefficient: usize) -> Point {
+        let mut coef = coefficient;
+        let mut current = *self;
+        let mut result = Point::new(None, None, self.a, self.b);
+
+        while coef > 0 {
+            if coef & 1 == 1 {
+                result = result.add(&current);
+            }
+            current = current.add(&current);
+            coef = coef >> 1;
+        }
+
+        result
+    }
+
     pub fn eq(&self, other: &Point) -> bool {
         self.a.eq(&other.a) &&  self.b.eq(&other.b) &&  self.x.eq(&other.x) &&  self.y.eq(&other.y)
     }
@@ -146,7 +163,12 @@ mod tests {
         let p2 = Point::new(Some(x2), Some(y2), a, b);
         let p3 = Point::new(Some(x3), Some(y3), a, b);
         assert_eq!(p1.add(&p2), p3);
-        
+
+        let x1 = FieldElement::new(15, 223);
+        let y1 = FieldElement::new(86, 223);
+        let p1 = Point::new(Some(x1), Some(y1), a, b);
+        let pp = Point::new(None, None, a, b);
+        assert_eq!(p1.rmul(7), pp);
     }
 }
 

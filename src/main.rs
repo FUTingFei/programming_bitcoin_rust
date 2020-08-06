@@ -5,29 +5,16 @@ fn main() {
     let a = FieldElement::new(0, 223);
     let b = FieldElement::new(7, 223);
     
-    let x = FieldElement::new(192, 223);
-    let y = FieldElement::new(105, 223);
-    let p1 = Point::new(Some(x), Some(y), a, b);
-    println!("p1 is {:?}", p1);
+    let x1 = FieldElement::new(15, 223);
+    let y1 = FieldElement::new(86, 223);
+    let p1 = Point::new(Some(x1), Some(y1), a, b);
+    let mut pp = p1.add(&p1);
+    let mut n = 2;
 
-    let x = FieldElement::new(17, 223);
-    let y = FieldElement::new(56, 223);
-    let p1 = Point::new(Some(x), Some(y), a, b);
-    println!("p1 is {:?}", p1);
+    while pp.x != None {
+        n += 1;
+        pp = pp.add(&p1);
+    }
 
-    // let x = FieldElement::new(200, 223);
-    // let y = FieldElement::new(119, 223);
-    // let p1 = Point::new(Some(x), Some(y), a, b);
-    // println!("p1 is {:?}", p1);
-
-    let x = FieldElement::new(1, 223);
-    let y = FieldElement::new(193, 223);
-    let p1 = Point::new(Some(x), Some(y), a, b);
-    println!("p1 is {:?}", p1);
-
-    // let x = FieldElement::new(42, 223);
-    // let y = FieldElement::new(99, 223);
-    // let p1 = Point::new(Some(x), Some(y), a, b);
-    // println!("p1 is {:?}", p1);
-
+    println!("n = {}", n);
 }
