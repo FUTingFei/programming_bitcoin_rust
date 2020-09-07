@@ -1,20 +1,15 @@
-use programming_bitcoin_rust::chapter03::Point;
-use programming_bitcoin_rust::chapter01::FieldElement;
+use programming_bitcoin_rust::chapter03::point_field_element::Point;
+use programming_bitcoin_rust::chapter01::field_element::FieldElement;
+use num_bigint::{BigUint, BigInt, ToBigInt, ToBigUint};
+use programming_bitcoin_rust::chapter03::s256field::*;
+use programming_bitcoin_rust::chapter03::s256point::*;
 
 fn main() {
-    let a = FieldElement::new(0, 223);
-    let b = FieldElement::new(7, 223);
-    
-    let x1 = FieldElement::new(15, 223);
-    let y1 = FieldElement::new(86, 223);
-    let p1 = Point::new(Some(x1), Some(y1), a, b);
-    let mut pp = p1.add(&p1);
-    let mut n = 2;
-
-    while pp.x != None {
-        n += 1;
-        pp = pp.add(&p1);
-    }
-
-    println!("n = {}", n);
+    let gx:BigUint = BigUint::parse_bytes(b"79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16).unwrap();
+    let gy:BigUint = BigUint::parse_bytes(b"483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16).unwrap();
+    let n:BigUint = BigUint::parse_bytes(b"FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16).unwrap();
+    let gx = S256Field::new(gx);
+    let gy = S256Field::new(gy);
+    let g = S256Point::new(Some(gx), Some(gy));
+    println!{"{:?}", g.rmul(n)};
 }

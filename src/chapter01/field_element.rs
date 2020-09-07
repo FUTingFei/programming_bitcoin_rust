@@ -1,4 +1,3 @@
-
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct FieldElement {
     pub num: usize,

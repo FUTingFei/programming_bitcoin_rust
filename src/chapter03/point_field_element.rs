@@ -1,4 +1,4 @@
-use crate::chapter01::FieldElement;
+use crate::chapter01::field_element::FieldElement;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Point {
@@ -95,7 +95,7 @@ impl Point {
         }
     }
 
-    // learn
+    // 二进制展开算法，需要进一步学习
     pub fn rmul(&self, coefficient: usize) -> Point {
         let mut coef = coefficient;
         let mut current = *self;
