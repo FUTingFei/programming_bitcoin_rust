@@ -1,4 +1,4 @@
-use num_bigint::{BigUint, BigInt, ToBigInt, ToBigUint};
+use num_bigint::*;
 use super::s256field::S256Field;
 
 #[derive(Debug, PartialEq, Clone)]
@@ -118,7 +118,6 @@ impl S256Point {
         self.a.ne(&other.a )|| self.b.ne(&other.b) || self.x.ne(&other.x) ||  self.y.ne(&other.y)
     }
 }
-
 
 #[cfg(test)]
 mod tests {
